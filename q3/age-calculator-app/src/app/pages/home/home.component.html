@@ -1,0 +1,8 @@
+  <div class="form">
+    <form>
+      <label for="form">Enter your date of birth:</label><br>
+      <input type="date" id="form" [formControl]="form" [max]="maxDate"><br>
+      <button (click)="calculateAge()" [disabled]="form.pristine">Calculate Age</button>
+    </form>
+    <p>{{ result }}</p>
+  </div>
