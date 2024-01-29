@@ -1,21 +1,9 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-async function conectToDatabase() {
-    const sequelize = new Sequelize('postgres://postgres:admin@localhost:5432/lpr_database', {
-        dialect: 'postgres',
-    });
 
-    const lpr = sequelize.define('lpr', {
-        CountryOfVehicle: DataTypes.STRING,
-        RegNumber: DataTypes.STRING,
-        ConfidenceLevel: DataTypes.STRING,
-        CameraName: DataTypes.STRING,
-        Date: DataTypes.DATE,
-        Time: DataTypes.TIME,
-        ImageFilename: DataTypes.STRING,
-    }, {
-        tableName: 'lpr'
-    });
+async function conectToDatabase() {
+    const sequelize = await initSequalize();
+    const lpr = await initLprTable(sequelize);
 
     try {
         await sequelize.authenticate();
@@ -31,7 +19,8 @@ async function conectToDatabase() {
 
 async function getPlateReadsByDateAndCamera(startDate, endDate, cameraName) {
   try {
-    const lpr = await conectToDatabase();
+    const sequelize = await initSequalize();
+    const lpr = await initLprTable(sequelize);
 
     const records = await lpr.findAll({
         where: {
@@ -43,12 +32,31 @@ async function getPlateReadsByDateAndCamera(startDate, endDate, cameraName) {
     });
     const formattedRecords = records.map(record => record.dataValues);
 
-    console.table(formattedRecords);
+    formattedRecords.length != 0 ? console.table(formattedRecords): console.log("No plates that match these parameters.");
   } catch (error) {
     console.error('Error retrieving plate reads:', error);
     throw error;
   }
 }
 
+function initLprTable(sequelize){
+  return sequelize.define('lpr', {
+    CountryOfVehicle: DataTypes.STRING,
+    RegNumber: DataTypes.STRING,
+    ConfidenceLevel: DataTypes.STRING,
+    CameraName: DataTypes.STRING,
+    Date: DataTypes.DATE,
+    Time: DataTypes.TIME,
+    ImageFilename: DataTypes.STRING,
+  }, {
+    tableName: 'lpr'
+  });
+}
+function initSequalize(){
+  return new Sequelize('postgres://postgres:admin@localhost:5432/lpr_database', {
+    dialect: 'postgres',
+});
+}
 
-module.exports = { conectToDatabase, getPlateReadsByDateAndCamera };
+
+module.exports = { conectToDatabase, getPlateReadsByDateAndCamera, initSequalize };
