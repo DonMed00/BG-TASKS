@@ -1,6 +1,6 @@
 const chokidar = require('chokidar');
 const path = require('path');
-const fs = require('fs').promises; // Utilizar la versión de promesas de fs
+const fs = require('fs').promises;
 const sequelize = require('./sequelize');
 let lpr;
 const directoryACSOutputTest = path.join(__dirname, 'ACS Output Test');

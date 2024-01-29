@@ -19,6 +19,7 @@ Azure Storage Explorer
 Q5:
 Currently, before inserting a new record into the database, a query is performed to check if a record with the same fields already exists. Another option could be to have a trigger inside the table to always check before inserting.
 When the service is launched, it displays a menu with 3 options:
+
 1- Start File Monitoring -> Starts monitoring a specific directory, checks all .lpr files and inserts them into the database if it is not already. If a new .lpr file is inserted into the directory, it is also inserted into the database.
 <img width="813" alt="database-screen" src="https://github.com/DonMed00/BG-ASSESSMENT/assets/37997117/01a2de65-11ee-42a4-9c01-14fc7daacfa7">
 
@@ -28,4 +29,7 @@ When the service is launched, it displays a menu with 3 options:
 3- Exit
 
 Comments:
+
+In a production case, all keys and connections should be in a secure file. Also, if the app were larger, the folder structure should be more organized
+
 In Q5: I don't know if the service was required to check the directory without an observer, but I found it more efficient this way.
