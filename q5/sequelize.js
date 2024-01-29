@@ -29,4 +29,26 @@ async function conectToDatabase() {
     return lpr;
 }
 
-module.exports = conectToDatabase;
+async function getPlateReadsByDateAndCamera(startDate, endDate, cameraName) {
+  try {
+    const lpr = await conectToDatabase();
+
+    const records = await lpr.findAll({
+        where: {
+            Date: {
+                [Sequelize.Op.between]: [startDate, endDate]
+            },
+            CameraName: cameraName
+        }
+    });
+    const formattedRecords = records.map(record => record.dataValues);
+
+    console.table(formattedRecords);
+  } catch (error) {
+    console.error('Error retrieving plate reads:', error);
+    throw error;
+  }
+}
+
+
+module.exports = { conectToDatabase, getPlateReadsByDateAndCamera };

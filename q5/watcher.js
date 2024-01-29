@@ -1,13 +1,13 @@
 const chokidar = require('chokidar');
 const path = require('path');
 const fs = require('fs').promises; // Utilizar la versión de promesas de fs
-const conectToDatabase = require('./sequelize');
+const sequelize = require('./sequelize');
 let lpr;
 const directoryACSOutputTest = path.join(__dirname, 'ACS Output Test');
 
 async function startMonitoring() {
   try {
-    lpr = await conectToDatabase();
+    lpr = await sequelize.conectToDatabase();
     watchDirectory();
   } catch (error) {
     console.error('Error starting the monitoring service:', error);
@@ -42,7 +42,7 @@ async function processLPRFile(filePath) {
 async function processLPR(data) {
   const record = parseLPRData(data);
   if (!record) {
-    console.error('The data format is incorrect or incomplete.');
+    console.error('The data format is incorrect.');
     return;
   }
 
@@ -113,6 +113,4 @@ async function verifyRecordExistence(record) {
     return false;
   }
 }
-
-module.exports = { startMonitoring };
-
+module.exports =  { startMonitoring };
