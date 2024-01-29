@@ -16,3 +16,5 @@ Azure Storage Explorer
 <img width="1881" alt="azurite-screenshot" src="https://github.com/DonMed00/BG-ASSESSMENT/assets/37997117/537bc366-1d55-49c3-a222-941b01888392">
 
 
+Q5:
+Currently, before inserting a new record into the database, a query is performed to check if a record with the same fields already exists. Another option could be to have a trigger inside the table to always check before inserting.

@@ -2,6 +2,7 @@
 node_modules/
 azurite/
 dist/
+ACS Output Test/
 
 # Logs
 logs
